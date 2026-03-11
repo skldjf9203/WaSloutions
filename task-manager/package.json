@@ -1,0 +1,15 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "A lightweight, client-side task management app built with HTML, CSS, and vanilla JavaScript.",
+  "keywords": ["task-manager", "todo", "vanilla-js", "localStorage"],
+  "homepage": ".",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx --yes serve . --listen 3000",
+    "dev": "npx --yes live-server --port=3000 --open=index.html"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
