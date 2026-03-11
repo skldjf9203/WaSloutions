@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>Task Manager</h1>
+      <p class="subtitle">Stay organized, get things done</p>
+    </header>
+
+    <!-- Add task form -->
+    <section class="add-task-section" aria-label="Add a new task">
+      <div class="input-group">
+        <input
+          type="text"
+          id="task-title-input"
+          class="task-input"
+          placeholder="What needs to be done?"
+          maxlength="200"
+          aria-label="Task title"
+        />
+        <button id="add-task-btn" class="btn btn-primary" aria-label="Add task">
+          Add Task
+        </button>
+      </div>
+      <textarea
+        id="task-desc-input"
+        class="task-desc-input"
+        placeholder="Optional description…"
+        maxlength="500"
+        rows="2"
+        aria-label="Task description"
+      ></textarea>
+    </section>
+
+    <!-- Filter bar -->
+    <nav class="filter-bar" aria-label="Filter tasks">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </nav>
+
+    <!-- Task list -->
+    <main>
+      <ul id="task-list" class="task-list" aria-live="polite" aria-label="Task list">
+        <!-- Tasks are injected here by app.js -->
+      </ul>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state" hidden>
+        <span class="empty-icon">✅</span>
+        <p>No tasks here! Add one above.</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span id="task-count" class="task-count">0 tasks remaining</span>
+      <button id="clear-completed-btn" class="btn btn-ghost">
+        Clear Completed
+      </button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
