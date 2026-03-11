@@ -230,17 +230,15 @@ function handleAddTask() {
 // render, we use two delegated listeners that persist for the app lifetime.
 
 taskList.addEventListener('change', e => {
-  if (e.target.classList.contains('task-checkbox')) {
-    const id = e.target.closest('.task-item')?.dataset.id;
-    if (id) { toggleTask(id); render(); }
-  }
+  if (!e.target.classList.contains('task-checkbox')) return;
+  const id = e.target.closest('.task-item')?.dataset.id;
+  if (id) { toggleTask(id); render(); }
 });
 
 taskList.addEventListener('click', e => {
-  if (e.target.classList.contains('btn-icon')) {
-    const id = e.target.closest('.task-item')?.dataset.id;
-    if (id) { deleteTask(id); render(); }
-  }
+  if (!e.target.classList.contains('btn-icon')) return;
+  const id = e.target.closest('.task-item')?.dataset.id;
+  if (id) { deleteTask(id); render(); }
 });
 
 // "Add Task" button click
