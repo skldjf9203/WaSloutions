@@ -126,6 +126,8 @@ function getFilteredTasks() {
 
 /**
  * Build and return a <li> element for a single task.
+ * Event listeners are handled via delegation on taskList rather than
+ * being attached to every element on each render.
  * @param {{ id: string, title: string, description: string, completed: boolean }} task
  * @returns {HTMLLIElement}
  */
@@ -140,11 +142,6 @@ function createTaskElement(task) {
   checkbox.className = 'task-checkbox';
   checkbox.checked   = task.completed;
   checkbox.setAttribute('aria-label', `Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`);
-
-  checkbox.addEventListener('change', () => {
-    toggleTask(task.id);
-    render();
-  });
 
   // Task body
   const body = document.createElement('div');
@@ -168,11 +165,6 @@ function createTaskElement(task) {
   deleteBtn.textContent      = '✕';
   deleteBtn.setAttribute('aria-label', `Delete task "${task.title}"`);
 
-  deleteBtn.addEventListener('click', () => {
-    deleteTask(task.id);
-    render();
-  });
-
   li.appendChild(checkbox);
   li.appendChild(body);
   li.appendChild(deleteBtn);
@@ -184,19 +176,29 @@ function createTaskElement(task) {
 function render() {
   const filtered = getFilteredTasks();
 
-  // Clear and repopulate the list
-  taskList.innerHTML = '';
-  filtered.forEach(task => taskList.appendChild(createTaskElement(task)));
+  // Build all task elements off-DOM in a DocumentFragment, then swap in one operation.
+  const fragment = document.createDocumentFragment();
+  filtered.forEach(task => fragment.appendChild(createTaskElement(task)));
+  taskList.replaceChildren(fragment);
 
   // Empty state visibility
   emptyState.hidden = filtered.length > 0;
 
-  // Remaining count (always based on ALL tasks, not the filtered subset)
-  const remaining = tasks.filter(t => !t.completed).length;
+  // Compute remaining count and hasCompleted in a single pass instead of
+  // two separate array traversals (.filter().length + .some()).
+  let remaining    = 0;
+  let hasCompleted = false;
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].completed) {
+      hasCompleted = true;
+    } else {
+      remaining++;
+    }
+  }
+
   taskCountEl.textContent = remaining === 1 ? '1 task remaining' : `${remaining} tasks remaining`;
 
   // Show/hide "Clear Completed" button
-  const hasCompleted = tasks.some(t => t.completed);
   clearCompletedBtn.style.visibility = hasCompleted ? 'visible' : 'hidden';
 }
 
@@ -222,6 +224,22 @@ function handleAddTask() {
   taskTitleInput.focus();
   render();
 }
+
+// ---- Event delegation on the task list ----
+// Instead of attaching listeners to every checkbox and delete button on each
+// render, we use two delegated listeners that persist for the app lifetime.
+
+taskList.addEventListener('change', e => {
+  if (!e.target.classList.contains('task-checkbox')) return;
+  const id = e.target.closest('.task-item')?.dataset.id;
+  if (id) { toggleTask(id); render(); }
+});
+
+taskList.addEventListener('click', e => {
+  if (!e.target.classList.contains('btn-icon')) return;
+  const id = e.target.closest('.task-item')?.dataset.id;
+  if (id) { deleteTask(id); render(); }
+});
 
 // "Add Task" button click
 addTaskBtn.addEventListener('click', handleAddTask);
