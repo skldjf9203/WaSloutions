@@ -73,14 +73,31 @@ This repository includes VS Code workspace configuration (`.vscode/extensions.js
 
 #### 1 – Install the extensions
 
-When you open this repo in VS Code it will offer to install the recommended extensions automatically. Accept the prompt, **or** install them manually:
+**Option A — one-command setup (recommended)**
 
-| Extension | Marketplace ID |
-|---|---|
-| GitHub Copilot | `GitHub.copilot` |
-| GitHub Copilot Chat | `GitHub.copilot-chat` |
+Open a terminal in the repo root and run the script for your OS:
 
-You can also install from the terminal:
+```bash
+# macOS / Linux
+bash scripts/setup-copilot.sh
+```
+
+```powershell
+# Windows (PowerShell) — allow local scripts first if needed:
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+.\scripts\setup-copilot.ps1
+```
+
+The script will:
+- Check that the `code` CLI is on your PATH (and tell you how to add it if not)
+- Install `GitHub.copilot` and `GitHub.copilot-chat` with `--force` to ensure the latest version
+- Print step-by-step sign-in and activation instructions
+
+> **`code` CLI not found?** Open VS Code → Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) → **Shell Command: Install 'code' command in PATH**, then re-run the script.
+
+**Option B — install extensions manually**
+
+When you open this repo in VS Code it will offer to install the recommended extensions automatically. Accept the prompt, **or** run:
 
 ```bash
 code --install-extension GitHub.copilot
