@@ -60,4 +60,69 @@ Works in all modern browsers (Chrome, Firefox, Safari, Edge). No polyfills requi
 
 ---
 
+## 🤖 GitHub Copilot Chat in VS Code
+
+This repository includes VS Code workspace configuration (`.vscode/extensions.json` and `.vscode/settings.json`) to help you get **GitHub Copilot** and **GitHub Copilot Chat** running quickly.
+
+### Prerequisites
+
+1. A **GitHub account** with an active [Copilot subscription](https://github.com/features/copilot) (individual, team, or enterprise). A free trial is available.
+2. **VS Code** version 1.82 or later ([download](https://code.visualstudio.com/)).
+
+### Step-by-step setup
+
+#### 1 – Install the extensions
+
+When you open this repo in VS Code it will offer to install the recommended extensions automatically. Accept the prompt, **or** install them manually:
+
+| Extension | Marketplace ID |
+|---|---|
+| GitHub Copilot | `GitHub.copilot` |
+| GitHub Copilot Chat | `GitHub.copilot-chat` |
+
+You can also install from the terminal:
+
+```bash
+code --install-extension GitHub.copilot
+code --install-extension GitHub.copilot-chat
+```
+
+#### 2 – Sign in to GitHub
+
+1. After installing, a GitHub icon appears in the VS Code **Activity Bar** (left sidebar).
+2. Click **Sign in to use GitHub Copilot** in the status bar (bottom of the window), or open the **Accounts** menu (person icon, bottom-left) and choose **Sign in with GitHub**.
+3. A browser window opens — authorise VS Code in your GitHub account and return to VS Code.
+
+#### 3 – Open Copilot Chat
+
+| Method | Action |
+|---|---|
+| Keyboard shortcut | `Ctrl+Alt+I` (Windows/Linux) or `Cmd+Ctrl+I` (macOS) |
+| Activity Bar | Click the **Copilot Chat** icon (speech-bubble) in the left sidebar |
+| Command Palette | `Ctrl+Shift+P` → type **"Open Chat"** → select **GitHub Copilot Chat: Open Chat** |
+
+#### 4 – Verify it is working
+
+Type a question in the Chat panel, e.g.:
+
+```
+What does app.js do?
+```
+
+Copilot Chat will respond with an explanation in the Chat panel. To verify inline suggestions are also working, open `task-manager/app.js` and start typing — Copilot will show grey-text completions as you type.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| "GitHub Copilot could not connect" | Check your internet connection and firewall. Copilot needs access to `*.github.com` and `*.githubcopilot.com`. |
+| No Copilot icon / chat panel | Confirm both extensions (`GitHub.copilot` **and** `GitHub.copilot-chat`) are installed and **enabled** (not disabled for this workspace). |
+| Signed in but no suggestions | Open the Command Palette → **GitHub Copilot: Enable** — make sure Copilot is enabled for the current language. |
+| "You don't have access to GitHub Copilot" | Your GitHub account needs an active Copilot subscription or your organisation must grant you access. |
+| Extension keeps asking to sign in | Sign out fully (**Accounts** menu → sign out), reload VS Code, then sign in again. |
+
+> **Tip:** After signing in, run **Developer: Reload Window** from the Command Palette (`Ctrl+Shift+P`) if the Chat panel still does not appear.
+
+---
+
 *More projects coming soon.*
